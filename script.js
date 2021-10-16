@@ -51,7 +51,6 @@ UpdateTheme(currentTheme);
 UpdateQuote(currentQuotesKey);
 
 selectTheme.addEventListener('change', () => {
-    // console.log(selectTheme.value);
     currentTheme = selectTheme.value;
 
     UpdateTheme(currentTheme);
