@@ -1,43 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minggu 3</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script type="text/javascript" src="jquery-3.5.1.min.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <h2>This is my website</h2>
-
-        <div class="first-part">
-            <label for="select-theme">Choose the theme</label>
-            <select id="select-theme">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-            </select>
-        </div>
-        
-        <div class="second-part">
-            <label for="select-key">Choose the key word</label>
-            <select id="select-key">
-                <option value="Everything">Everything</option>
-                <option value="Experts">Experts</option>
-            </select>
-            <p id='quotes-field'></p>
-        </div>
-
-
-        <div class="third-part">
-            <label for="input-number">Input number</label>
-            <input id="input-number" type="number">
-            <button id="input-button">Calculate</button>
-            <p id="factorial-result"></p>
-        </div>
-
-
-    </div>
+    <form method="post" id="form_mhs">
+        <label>NIM </label>
+        <input id="nim" type="number" name="nim"><br>
+        <label>Nama </label>
+        <input type="text" name="nama"><br>
+        <label>Prodi </label>
+        <select name="prodi">
+                <option value="IF">Teknik Informatika</option>
+                <option value="EL">Teknik Elektro</option>
+                <option value="SI">Teknik Sipil</option>
+                <option value="TG">Teknik Geofisika</option>
+                <option value="MA">Matematika</option>
+        </select><br>
+        <label>Angkatan </label>
+        <input type="number" name="angkatan"><br>
+    </form>
+    <button id="btn_tampil">Add</button>
+    <button id="btn_update">Update</button>
+    <button id="btn_delete">Delete</button>
+    <hr>
+    <div id="tampil_data"></div>
+    <script>
+        $(document).ready(function() {
+            $('#tampil_data').load("tampil.php");
+            $('#btn_tampil').click(() => {
+                const data = $('#form_mhs').serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: "tambah.php",
+                    data: data,
+                    cache: false,
+                    success: function(data) {
+                        $('#tampil_data').load("tampil.php");
+                    },
+                    error: function(request, error) {
+                        console.log(arguments);
+                        alert(" Can't do because: " + error);
+                    }
+                });
+            });
+            $('#btn_update').click(() => {
+                console.log('HALLO')
+                const data = $('#form_mhs').serialize();
+                $.ajax({
+                    type:'POST',
+                    url: 'update.php',
+                    data: data,
+                    cache: false,
+                    success: (data) => {
+                        console.log(data);
+                        $('#tampil_data').load('tampil.php');
+                    },
+                    error: function(request, error) {
+                        console.log(error);
+                        alert(" Can't do because: " + error);
+                    }
+                });
+            });
+            $('#btn_delete').click(() => {
+                console.log('HALLO')
+                const data = $('#nim').serialize();
+                
+                $.ajax({
+                    type:'POST',
+                    url: 'delete.php',
+                    data: data,
+                    cache: false,
+                    success: (data) => {
+                        console.log(data);
+                        $('#tampil_data').load('tampil.php');
+                    },
+                    error: function(request, error) {
+                        console.log(error);
+                        alert(" Can't do because: " + error);
+                    }
+                });
+                
+            });
+            
+        });
+    </script>
 </body>
+
 </html>
