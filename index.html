@@ -1,92 +1,60 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <script type="text/javascript" src="jquery-3.5.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery-3.5.1.min.js"></script>
+    <title>Document</title>
 </head>
-
 <body>
-    <form method="post" id="form_mhs">
-        <label>NIM </label>
-        <input id="nim" type="number" name="nim"><br>
-        <label>Nama </label>
-        <input type="text" name="nama"><br>
-        <label>Prodi </label>
-        <select name="prodi">
-                <option value="IF">Teknik Informatika</option>
-                <option value="EL">Teknik Elektro</option>
-                <option value="SI">Teknik Sipil</option>
-                <option value="TG">Teknik Geofisika</option>
-                <option value="MA">Matematika</option>
-        </select><br>
-        <label>Angkatan </label>
-        <input type="number" name="angkatan"><br>
-    </form>
-    <button id="btn_tampil">Add</button>
-    <button id="btn_update">Update</button>
-    <button id="btn_delete">Delete</button>
-    <hr>
-    <div id="tampil_data"></div>
+    <div class="container">
+        <h1>Calculator</h1>
+        <div class="first-cont">
+            <div id="equation">
+                <input type="number" id="left-num">
+                <h2>and</h2>
+                <input type="number" id="right-num">
+            </div>
+            <button id="sub-btn">Submit</button>
+
+            <div id="first-answer"></div>
+        </div>
+        <h1>Sorting</h1>
+        <div class="second-cont">
+
+        </div>
+        <h1>Prime Number</h1>
+        <div class="third-cont">
+
+        </div>
+    </div>
+
     <script>
-        $(document).ready(function() {
-            $('#tampil_data').load("tampil.php");
-            $('#btn_tampil').click(() => {
-                const data = $('#form_mhs').serialize();
-                $.ajax({
-                    type: 'POST',
-                    url: "tambah.php",
-                    data: data,
-                    cache: false,
-                    success: function(data) {
-                        $('#tampil_data').load("tampil.php");
-                    },
-                    error: function(request, error) {
-                        console.log(arguments);
-                        alert(" Can't do because: " + error);
-                    }
-                });
-            });
-            $('#btn_update').click(() => {
-                console.log('HALLO')
-                const data = $('#form_mhs').serialize();
-                $.ajax({
-                    type:'POST',
-                    url: 'update.php',
-                    data: data,
-                    cache: false,
-                    success: (data) => {
-                        console.log(data);
-                        $('#tampil_data').load('tampil.php');
+        $("#sub-btn").on("click", () => {
+            const leftNum = $("#left-num").val();
+            const rightNum = $("#right-num").val();
+            const data = {"left": leftNum, "right": rightNum};
+            $.ajax({
+                type:'POST',
+                url: 'hitung.php',
+                data: data,
+                cache: false,
+                success: (data) => {
+                        const ansField = document.getElementById('first-answer');
+                        ansField.innerHTML = data;
                     },
                     error: function(request, error) {
                         console.log(error);
                         alert(" Can't do because: " + error);
                     }
-                });
-            });
-            $('#btn_delete').click(() => {
-                console.log('HALLO')
-                const data = $('#nim').serialize();
-                
-                $.ajax({
-                    type:'POST',
-                    url: 'delete.php',
-                    data: data,
-                    cache: false,
-                    success: (data) => {
-                        console.log(data);
-                        $('#tampil_data').load('tampil.php');
-                    },
-                    error: function(request, error) {
-                        console.log(error);
-                        alert(" Can't do because: " + error);
-                    }
-                });
-                
-            });
-            
+            })
         });
+        $(document).ready(() => {
+            $(".second-cont").load("sort.php");
+            $(".third-cont").load("prima.php");
+        })
+
     </script>
 </body>
-
 </html>
