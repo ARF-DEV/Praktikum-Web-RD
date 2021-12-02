@@ -3,7 +3,7 @@ class Koneksi
 {
     private $dbHost     = "localhost";
     private $dbUser     = "root";
-    private $dbPassword = "alfast12";
+    private $dbPassword = "";
     private $dbName     = "prakweb";
 
     public function connect()

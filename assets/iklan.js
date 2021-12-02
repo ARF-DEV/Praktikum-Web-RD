@@ -6,7 +6,7 @@ const modalHTML = `    <div class="modal open" id="modal-iklan">
     <h1>Ingin Belajar Cloud and Back-End?</h1>
     <p>gratis <i>course</i> belajar dasar <i>cloud computing</i></p>
     <a class="btn btn-yes" href="https://www.dicoding.com/programs/aws/registration/1100554" target="_blank">Saya mau!!</a>
-    <a class="btn btn-no">Jangan Tampilkan Lagi</a>
+    <a class="btn btn-no" id="tolak">Jangan Tampilkan Lagi</a>
 
     <button class="modal-close modal-exit">X</button>
 </div>
@@ -23,3 +23,4 @@ exits.forEach(function(exit) {
         modal.classList.remove('open')
     })
 });
+

@@ -12,6 +12,8 @@ $posts = $conn->query("SELECT * FROM post")->fetch_all(MYSQLI_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script defer src="./assets/iklan/iklan.js"></script> -->
+    <script defer src="./assets/script.js"></script>
     <title>Home</title>
     <style>
         .base {
@@ -75,6 +77,14 @@ $posts = $conn->query("SELECT * FROM post")->fetch_all(MYSQLI_ASSOC);
             border: solid 1px #a18f8f29;
             padding: 10px;
         }
+        
+        .card-btn {
+            background-color: greenyellow;
+            border: solid 3px;
+            width: 5em;
+            height: 2em;
+            border-radius: 3px;
+        }
     </style>
     <!-- modal iklan styling -->
     <link rel="stylesheet" href="./assets/iklan/iklan.css">
@@ -84,12 +94,12 @@ $posts = $conn->query("SELECT * FROM post")->fetch_all(MYSQLI_ASSOC);
     <section class="base">
         <main>
             <?php foreach ($posts as $item) { ?>
-
                 <div style="width: 50%;">
-                    <div class="card">
+                    <div class="card" data-id="<?= $item['id'] ?>" onclick="addHist(this)">
                         <div class="container">
                             <h3 class="card-head"><?= $item['judul']; ?></h3>
                             <p class="card-body"><?= $item['isi']; ?></p>
+                            <button class="card-btn">Add</button>
                         </div>
                     </div>
                 </div>
@@ -99,11 +109,15 @@ $posts = $conn->query("SELECT * FROM post")->fetch_all(MYSQLI_ASSOC);
 
         <aside>
             <h2>History</h2>
-            <div></div>
+            <div id="history-buck"></div>
         </aside>
     </section>
 
-    <script src="./assets/iklan/iklan.js"></script>
+    <?php
+        if (!isset($_COOKIE['tolak']) || $_COOKIE['tolak'] !== 'yes') {
+            echo '<script src="./assets/iklan.js"></script>';
+        }
+    ?>
 </body>
 
 </html>
